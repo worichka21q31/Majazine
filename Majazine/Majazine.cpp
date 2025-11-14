@@ -5,6 +5,9 @@
 #include <iomanip>
 #include "Header.h"
 
+
+
+
 // Значения...
 bool isstotageCreated = false;
 size_t siz = 0;
@@ -37,11 +40,32 @@ int main()
 
 void Start()
 {
+    std::string choose;
     if (Login())
     {
         if (curretStatus == userStatus[0])
         {
+            do
+            {
+                system("cls");
+                std::cout << "[]===================Зараженный===================[]\n\n";
+                std::cout << "\tВыберите Склад\n1 - Готовый Склад\n2 - Создать новый\nВвод -> ";
+                Getline(choose);
+            } while (choose != "1" && choose != "2");
+            if (choose == "1")
+            {
+                CreateStorage();
+                ShowSuperAdmMenu();
+            }
+            else if (choose == "2")
+            {
 
+            }
+            else
+            {
+                Err();
+            }
+                
         }
         else if (curretStatus == userStatus[1])
         {
@@ -102,7 +126,7 @@ bool Login()
                 std::cout << "[]===================Зараженный===================[]\n\n";
                 std::cout << "[][][][][][][][][]\n";
                 std::cout << "[] ./ \\…/ \\.    []\t Пользователь: " << login << "\n";
-                std::cout << "[](.‘•..•’.)    []\t Статус: " << statusArr[i] << "\n";
+                std::cout << "[] .‘•..•’.     []\t Статус: " << statusArr[i] << "\n";
                 std::cout << "[]  ..=*=..     []\t Фио: "<< loginNameArr[i] << "\n";
                 std::cout << "[](.\\.||./.)~~**[]\n";
                 std::cout << "[][][][][][][][][]\n\n\n";
@@ -202,7 +226,7 @@ void SumonToLogin()
 void SummonmenuNoLog()
 {
     system("cls");
-    std::cout << "[]===================Зараженный===================[]\n\n";
+    std::cout << "[]==========-=========Зараженный===================[]\n\n";
     std::cout << "\t\tДобро Пожаловать в ''\n";
     std::cout << "\t\t    Введите Пароль\n\nВвод: ";
 }
@@ -263,6 +287,7 @@ void CreateStorage()
     countArr = new unsigned int[sizest];
     priceArr = new double[sizest];
 
+    siz = sizest;
     FillArray(id, idArr, sizest);
     FillArray(name, nameArr, sizest);
     FillArray(count, countArr, sizest);
@@ -281,4 +306,152 @@ void Delete()
     delete[]loginArr, passArr, statusArr, loginNameArr;
 
 
+}
+void ShowStorage(int mode = 0)
+{
+    if (mode == 0)
+    {
+
+        system("cls");
+        std::cout << "[]==========================Зараженный=============================[]\n";
+        std::cout << "[]\tID\t" << std::left << std::setw(25) << "Название Товара"
+            << "\tКол-во\t" << "\tЦена\t[]\n";
+        for (size_t i = 0; i < siz; i++)
+        {
+            std::cout << "[]\t" << idArr[i] << "\t" << std::left << std::setw(25) << nameArr[i] << "\t"
+                << countArr[i] << "\t\t" << priceArr[i] << "\t[]\n";
+        }
+        std::cout << "[]=================================================================[]\n\n";
+    }
+    else if(mode == 1)
+    {
+        system("cls");
+        std::cout << "[]======================Зараженный=========================[]\n";
+        std::cout << "[]\tID\t" << std::left << std::setw(25) << "Название Товара"
+            << "\tКол-во\t\t" << "[]\n";
+        for (size_t i = 0; i < siz; i++)
+        {
+            std::cout << "[]\t" << idArr[i] << "\t" << std::left << std::setw(25) << nameArr[i] << "\t"
+                << countArr[i] << "\t" << "\t[]\n";
+        }
+        std::cout << "[]=========================================================[]\n";
+    }
+
+}
+void ShowSuperAdmMenu()
+{
+    std::string choose;
+    do
+    {
+        system("cls");
+        std::cout << "[]===================Зараженный===================[]\n\n";
+        std::cout << "\tВыберите опцию\n1 - Начать продажу\n2 - Показать склад";
+        std::cout << "\n3 - Пополнить склад\n4 - Списать товар";
+        std::cout << "\n5 - Изменить цену\n6 - Редактировать склад";
+        std::cout << "\n7 - Редактировать Персонал\n8 - Отчет о прибыли";
+        std::cout << "\n0 - Выйти\nВвод -> ";
+
+        Getline(choose);
+        if (choose == "1")
+        {
+            
+        }
+        else if (choose == "2")
+        {
+            ShowStorage();
+            system("pause");
+        }
+        else if (choose == "3")
+        {
+            AddStorageItem();
+            system("pause");
+        }
+        else if (choose == "4")
+        {
+            ;
+        }
+        else if (choose == "5")
+        {
+            ;
+        }
+        else if (choose == "6")
+        {
+            ;
+        }
+        else if (choose == "7")
+        {
+            ;
+        }
+        else if (choose == "8")
+        {
+            ;
+        }
+        else if (choose == "0")
+        {
+            break;
+        }
+
+        else
+        {
+            Err();
+        }
+    } while (true);
+
+}
+void AddStorageItem()
+{
+
+    std::string chooseId, chooseCount, choose;
+    unsigned int id = 0, count = 0;
+    
+    while (true)
+    {
+        do
+        {
+            system("cls");
+            ShowStorage(1);
+            std::cout << "[]=========================================================[]\n";
+            std::cout << "\tВыбор: Введите ID товара или Слово EXIT для выхода\n";
+            std::cout << "Ввод ->";
+            Getline(chooseId);
+            if (chooseId == "exit")
+            {
+                std::cout << "Отмена операции пополнения товара\n";
+                Sleep(1500);
+                break;
+            }
+        } while (IsNumber(chooseId));
+        int chooseIdInt = std::stoi(chooseId);
+        system("cls");
+        std::cout << "[]========================Зараженный========================[]\n";
+        std::cout << "\tВыбор: Введите Кол-Во " << idArr[chooseIdInt] << "товара или Слово EXIT для выхода\n";
+        std::cout << "Ввод ->";
+        Getline(chooseCount);
+        if (chooseId == "exit")
+        {
+            std::cout << "Отмена операции пополнения товара\n";
+            Sleep(1500);
+            break;
+        }
+    }
+    
+}
+bool IsNumber(const std::string &str)
+{
+    if (str.size() <= 0 || str.size() >= 10)
+    {
+        std::cout << "Ошибка длины числа. Максимум 9-Знач числа\n";
+        Sleep(1500);
+        return false;
+    }
+    for (size_t i = 0; i < str.size(); i++)
+    {
+        if (!std::isdigit(str[i]))
+        {
+            std::cout << "Введённые данные не являются числами\n";
+            Sleep(1500);
+            return false;
+        }
+    }
+    return true;
 }
