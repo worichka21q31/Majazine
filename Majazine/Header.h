@@ -4,6 +4,14 @@ void SummonmenuNoLog();
 
 void Start();
 
+void ShowStorage(int mode );
+
+void AddStorageItem();
+
+bool IsNumber(const std::string& str);
+
+void ShowSuperAdmMenu();
+
 bool Login();
 
 inline void Err(int time = 1500);
