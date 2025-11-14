@@ -24,3 +24,7 @@ void FillArray(ArrType staticArr[], ArrType dinArr[], int size);
 void Delete();
 
 void SumonToLogin();
+
+void RemoveStorageItem();
+
+void СhangePrice();
