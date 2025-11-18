@@ -312,6 +312,7 @@ void ShowStorage(int mode = 0)
     if (mode == 0)
     {
 
+
         system("cls");
         std::cout << "[]==========================Зараженный=============================[]\n";
         std::cout << "[]\tID\t" << std::left << std::setw(25) << "Название Товара"
@@ -347,7 +348,17 @@ void ShowStorage(int mode = 0)
             std::cout << "[]\t" << idArr[i] << "\t" << std::left << std::setw(25) << nameArr[i] << "\t"
                 << priceArr[i] << "\t" << "\t[]\n";
         }
-
+    }
+    else if (mode == 3)
+    {
+        system("cls");
+        std::cout << "[]======================Зараженный========================[]\n";
+        std::cout << "[]\tID\t" << std::left << std::setw(25) << "Название Товара"
+            << "\t\t\t" << "[]\n";
+        for (size_t i = 0; i < siz; i++)
+        {
+            std::cout << "[]\t" << idArr[i] << "\t" << std::left << std::setw(25) << nameArr[i] << "\t\t\t" << "[]\n";
+        }
     }
 }
 void ShowSuperAdmMenu()
@@ -387,7 +398,7 @@ void ShowSuperAdmMenu()
         }
         else if (choose == "6")
         {
-            ;
+            СhangeStoroge();
         }
         else if (choose == "7")
         {
@@ -594,7 +605,31 @@ void RemoveStorageItem()
     }
 
 }
+void СhangeStoroge()
+{
+    std::string choose;
+    system("cls");
+    std::cout << "[]========================Зараженный=======================[]\n";
+    std::cout << "\tВыберите опцию\n1 - Добавить новый товар\n2 - Изменить название товара";
+    std::cout << "\n3 - Удалить товар\n0 - выйти\nВвод -> ";
+    Getline(choose);
+    if (choose == "1")
+    {
+        AddNewItem();
+    }
+    else if (choose == "2")
+    {
+        ChangeName();
+    }
+    else if (choose == "3")
+    {
 
+    }
+    else if (choose == "0")
+    {
+    }
+
+}
 void СhangePrice()
 {
 
@@ -678,4 +713,229 @@ void СhangePrice()
 
     }
 
+}
+void AddNewItem()
+{
+    std::string newName, newPrice, newCount, choosee;
+    double price = 0.0;
+    unsigned int count = 0;
+    bool exit ;
+
+    while (true)
+    {
+        exit = true;
+        while (true)
+        {
+            system("cls");
+            std::cout << "[]===================Admin_menu===================[]\n";
+            std::cout << "\tВыбор: Введите ИМЯ нового товара \n\t или EXIT для выхода\nВвод-> ";
+            Getline(newName);
+
+            if (newName == "exit")
+            {
+                std::cout << "\nВыход...";
+                Sleep(1500);
+                exit = false;
+                break;
+            }
+            if (newName.size() <= 0 || newName.size() >= 30)
+            {
+                std::cout << "\nОшибка!! имя не может быть длинее чем 25 см.";
+                Sleep(1500);
+            }
+            else
+            {
+                break;
+            }
+        }
+        while (exit)
+        {
+            system("cls");
+            std::cout << "[]===================Admin_menu===================[]\n";
+            std::cout << "\tВыбор: Введите ЦЕНУ нового товара \n\t или EXIT для выхода\nВвод-> ";
+            Getline(newPrice);
+
+            if (newCount == "exit")
+            {
+                std::cout << "\nВыход...";
+                Sleep(1500);
+                exit = false;
+                break;
+            }
+            if (IsNumber(newPrice))
+            {
+                price = std::stod(newPrice);
+                if (price <= 0 || price >= 52300)
+                {
+                    std::cout << "\nОшибка!! Цена более 52300 - бред.";
+                    Sleep(1500);
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+        while (exit)
+        {
+            system("cls");
+            std::cout << "[]===================Admin_menu===================[]\n";
+            std::cout << "\tВыбор: Введите КОЛ-ВО нового товара \n\t или EXIT для выхода\nВвод-> ";
+            Getline(newCount);
+
+            if (newCount == "exit")
+            {
+                std::cout << "\nВыход...";
+                Sleep(1500);
+                exit = false;
+                break;
+            }
+            if (IsNumber(newCount))
+            {
+                count = std::stoi(newCount);
+                if (count <= 0 || count >= 100)
+                {
+                    std::cout << "\nОшибка!! 100 макс.";
+                    Sleep(1500);
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+        while (exit)
+        {
+            system("cls");
+            std::cout << "[]===================Admin_menu===================[]\n\n";
+            std::cout << "\tИмя: " << newName;
+            std::cout << "\n\tЦена: " << price;
+            std::cout << "\n\tКол-во: " << count << std::endl;
+            std::cout << "\tПодтверждение:\n\t1 - Да ; 2 - Нет\nВвод-> ";
+            Getline(choosee);
+            if (choosee == "1")
+            {
+                siz++;
+                unsigned int* bufIdArr = new unsigned int[siz];
+                std::string* bufNameArr = new std::string[siz];
+                unsigned int* bufCountArr = new unsigned int[siz];
+                double* bufPriceArr = new double[siz];
+                
+
+                
+                FillArray(idArr, bufIdArr, siz - 1);
+                FillArray(nameArr, bufNameArr, siz - 1);
+                FillArray(countArr, bufCountArr, siz - 1);
+                FillArray(priceArr, bufPriceArr, siz - 1);
+
+                bufIdArr[siz - 1] = siz;
+                bufNameArr[siz - 1] = newName;
+                bufCountArr[siz - 1] = count;
+                bufPriceArr[siz - 1] = price;
+                
+                std::swap(idArr, bufIdArr);
+                std::swap(nameArr, bufNameArr);
+                std::swap(countArr, bufCountArr);
+                std::swap(priceArr, bufPriceArr);
+
+                delete[] bufIdArr, bufNameArr, bufCountArr, bufPriceArr;
+                system("cls");
+                std::cout << "[]===================Admin_menu===================[]\n\n";
+                std::cout << "\tБрррр... \n";
+                Sleep(2000);
+                std::cout << "\tБип-вап \n";
+                Sleep(2000);
+                std::cout << "\tБжжжж \n";
+                Sleep(1500);
+                break;
+
+            }
+            else if (choosee == "2")
+            {
+                std::cout << "\nОтмена";
+                Sleep(1500);
+                break;
+            }
+            else
+            {
+                Err();
+            }
+        }
+        break;
+    }
+
+}
+
+void DeleteItem()
+{
+}
+void ChangeName()
+{
+    std::string chooseId, newName, choose;
+    unsigned int id = 0;
+    while (true)
+    {
+        ShowStorage(3);
+        std::cout << "[]=======================Admin_menu=======================[]\n\n";
+        std::cout << "\tВыбор: Введите ID товара \n\t или EXIT для выхода\nВвод-> ";
+        Getline(chooseId);
+        if (chooseId == "exit")
+        {
+            std::cout << "\n\tОтмена Галя гредет";
+            Sleep(1555);
+            break;
+        }
+        if (IsNumber(chooseId))
+        {
+            while (true)
+            {
+                system("cls");
+                std::cout << "[]=====================Admin_menu=====================[]\n\n";
+                std::cout << "\tВыбор: Введите ИМЯ товара \nВвод-> ";
+
+                Getline(newName);
+                if (newName.size() <= 0 || newName.size() >= 30)
+                {
+                    std::cout << "\nОшибка!! имя не может быть длинее чем 25 см.";
+                    Sleep(1500);
+                }
+                else
+                {
+                    id = std::stoi(chooseId) - 1;
+                    if (id < 0 || id > siz -1)
+                    {
+                        std::cout << "\nОшибка!! Неверный Айди.";
+                    }
+                    else
+                    {
+                        system("cls");
+                        std::cout << "[]===================Admin_menu===================[]\n\n";
+                        std::cout << "\t" << nameArr[id] << "---> " << newName ;
+                        std::cout << "\n\tПодтверждение:\n\t1 - Да ; 2 - Нет\nВвод-> ";
+                        Getline(choose);
+                        if (choose == "1")
+                        {
+                            nameArr[id] = newName;
+                            break;
+                        }
+                        else
+                        {
+                            std::cout << "\nОтмена.";
+                            Sleep(1500);
+                        }
+                        
+                    }
+                        
+                }
+            }
+        }
+        else
+        {
+            std::cout << "\nОшибка!! Неверный Айди.";
+        }
+        
+    }
+        
+
+}
 }
