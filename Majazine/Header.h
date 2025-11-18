@@ -2,6 +2,11 @@
 inline void Getline(std::string& line);
 void SummonmenuNoLog();
 
+void СhangeStoroge();
+
+void ChangeName();
+
+void DeleteItem();
 void Start();
 
 void ShowStorage(int mode );
@@ -28,3 +33,5 @@ void SumonToLogin();
 void RemoveStorageItem();
 
 void СhangePrice();
+
+void AddNewItem();
