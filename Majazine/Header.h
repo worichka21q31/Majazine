@@ -6,10 +6,35 @@ void СhangeStoroge();
 
 void ChangeName();
 
-void DeleteItem();
+bool Checkpass(const std::string& str);
+
+bool Checklogin(const std::string& str);
+
+void Setpasssymbols();
+
+void Setloginsymbols();
+
+void Addnewuser();
+
+void Showuser(int mode);
+
+void Selling();
+
+void Changeuser();
+
+void Changepass();
+
+void CheckArrAppend();
+
+void PrintCheck(double& totalsum);
+
+void DeleteUser();
+
 void Start();
 
-void ShowStorage(int mode );
+void StorageReturn();
+
+void ShowStorage(int mode);
 
 void AddStorageItem();
 
@@ -35,3 +60,5 @@ void RemoveStorageItem();
 void СhangePrice();
 
 void AddNewItem();
+
+void Deleteitem();
