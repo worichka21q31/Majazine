@@ -10,10 +10,10 @@
 // Значения...
 bool isstotageCreated = false;
 size_t siz = 0;
-unsigned int* idArr;
-std::string* nameArr;
-unsigned int* countArr;
-double* priceArr;
+unsigned int* idArr = nullptr;
+std::string* nameArr = nullptr;
+unsigned int* countArr = nullptr;
+double* priceArr = nullptr;
 size_t userSize = 2;
 size_t staff_count = 1;
 bool isloginsetcreate = false;
@@ -59,46 +59,66 @@ int main()
 void Start()
 {
     std::string choose;
-    if (Login())
+    while (true)
     {
-        if (curretStatus == userStatus[0])
+        if (Login())
         {
-            do
+            if (curretStatus == userStatus[0])
             {
-                system("cls");
-                std::cout << "[]===================Зараженный===================[]\n\n";
-                std::cout << "\tВыберите Склад\n1 - Готовый Склад\n2 - Создать новый\nВвод -> ";
-                Getline(choose);
-            } while (choose != "1" && choose != "2");
-            if (choose == "1")
-            {
-                CreateStorage();
-                ShowSuperAdmMenu();
-            }
-            else if (choose == "2")
-            {
+                do
+                {
+                    system("cls");
+                    std::cout << "[]===================Зараженный===================[]\n\n";
+                    std::cout << "\tВыберите Склад\n1 - Готовый Склад\n2 - Создать новый\nВвод -> ";
+                    Getline(choose);
+                } while (choose != "1" && choose != "2");
+                if (choose == "1")
+                {
+                    CreateStorage();
+                    ShowSuperAdmMenu();
+                }
+                else if (choose == "2")
+                {
 
+                }
+                else
+                {
+                    Err();
+                }
+
+            }
+            else if (curretStatus == userStatus[1])
+            {
+                if (isstotageCreated == false)
+                {
+                    CreateStorage();
+                }
+                ShowAdmMenu();
+            }
+            else if (curretStatus == userStatus[2])
+            {
+                if (isstotageCreated == false)
+                {
+                    CreateStorage();
+                }
+                ShowUserMenu();
             }
             else
             {
-                Err();
+                system("cls");
+                std::cout << "Для Завершение Работы Програмы Введите пароль Ас.Админа";
+                Getline(choose);
+                if (choose == passArr[0])
+                {
+                    break;
+                }
+                else if (choose == "exit")
+                {
+                    continue;
+                }
             }
 
         }
-        else if (curretStatus == userStatus[1])
-        {
-
-        }
-        else if (curretStatus == userStatus[2])
-        {
-
-        }
-        else
-        {
-            system("cls");
-            std::cout << "Завершение Работы Програмы ";
-        }
-
     }
     Delete();
 
@@ -421,13 +441,118 @@ void ShowSuperAdmMenu()
         }
         else if (choose == "8")
         {
-            ;
+            ShowIncome();
         }
         else if (choose == "0")
         {
-            break;
+            if (Logout())
+            {
+                break;
+            }
         }
 
+        else
+        {
+            Err();
+        }
+    } while (true);
+
+}
+void ShowAdmMenu()
+{
+
+    std::string choose;
+    do
+    {
+        system("cls");
+        std::cout << "[]===================Зараженный===================[]\n\n";
+        std::cout << "\tВыберите опцию\n1 - Начать продажу\n2 - Показать склад";
+        std::cout << "\n3 - Пополнить склад\n4 - Списать товар";
+        std::cout << "\n6 - Редактировать склад";
+        std::cout << "\n7 - Редактировать Персонал\n8 - Отчет о прибыли";
+        std::cout << "\n0 - Выйти\nВвод -> ";
+
+        Getline(choose);
+        if (choose == "1")
+        {
+            Selling();
+        }
+        else if (choose == "2")
+        {
+            ShowStorage();
+            system("pause");
+        }
+        else if (choose == "3")
+        {
+            AddStorageItem();
+        }
+        else if (choose == "4")
+        {
+            RemoveStorageItem();
+        }
+        else if (choose == "6")
+        {
+            СhangeStoroge();
+        }
+        else if (choose == "7")
+        {
+            Changeuser();
+        }
+        else if (choose == "8")
+        {
+            ShowIncome();
+        }
+        else if (choose == "0")
+        {
+            if (Logout())
+            {
+                break;
+            }
+        }
+
+        else
+        {
+            Err();
+        }
+    } while (true);
+}
+void ShowUserMenu()
+{
+    std::string choose;
+    do
+    {
+        system("cls");
+        std::cout << "[]===================Зараженный===================[]\n\n";
+        std::cout << "\tВыберите опцию\n1 - Начать продажу\n2 - Показать склад";
+        std::cout << "\n3 - Пополнить склад";
+        std::cout << "\n4 - Отчет о прибыли";
+        std::cout << "\n0 - Выйти\nВвод -> ";
+
+        Getline(choose);
+        if (choose == "1")
+        {
+            Selling();
+        }
+        else if (choose == "2")
+        {
+            ShowStorage();
+            system("pause");
+        }
+        else if (choose == "3")
+        {
+            AddStorageItem();
+        }
+        else if (choose == "4")
+        {
+            ShowIncome();
+        }
+        else if (choose == "0")
+        {
+            if (Logout())
+            {
+                break;
+            }
+        }
         else
         {
             Err();
@@ -1438,7 +1563,7 @@ void DeleteUser()
         {
             system("cls");
             std::cout << "[]========================================================[]\n";
-            std::cout << "\tОшибка: ВСЕ УЖЕ УВОЛЕНЫ!!!!!!";
+            std::cout << "\tОшибка: ВСЕ УЖЕ УВОЛЕНЫw!!!!!!";
             Sleep(1500);
             return;
         }
@@ -1602,7 +1727,42 @@ void Selling()
                     Getline(choose);
                     if (choose == "1")
                     {
+                        system("cls");
+                        std::cout << "[]====================Зараженный===================[]\n";
 
+                        std::cout << "\nК оплате: " << totalSum << "\n\n";
+                        std::cout << "Введите кол-во налика: ";
+                        Getline(chooseMoney);
+                        if (IsNumber(chooseMoney))
+                        {
+                            money = std::stod(chooseMoney);
+                            if (money < totalSum)
+                            {
+                                std::cout << "Недст средвтв";
+                                Sleep(1500);
+                                continue;
+                            }
+                            else if(money - totalSum > cash)
+                            {
+                                std::cout << "Cорян сдачи нет";
+                                Sleep(1500);
+                                continue;
+                            }
+                            else
+                            {
+                                std::cout << "Ваши: " << money << "\n\n";
+                                Sleep(400);
+                                std::cout << "Оплата прошла успешно. Сдача: " << money - totalSum << " рублей\n";
+                                Sleep(2000);
+                                cash += totalSum;
+                                cashIncome += totalSum;
+                                bonusarr[curretid] += totalSum;
+                                break;
+                            }
+                        }
+                        Sleep(1500);
+                        system("cls");
+                        break;
                     }
                     else if (choose == "2")
                     {
@@ -1634,11 +1794,17 @@ void Selling()
                             bankIncome += totalSum;
                             bonusarr[curretid] += totalSum;
                             system("cls");
+                            break;
                         }
                     }
                     else if (choose == "hit" || choose == "Hit")
                     {
-
+                        system("cls");
+                        std::cout << "[]====================Зараженный===================[]\n";
+                        std::cout << "\nВы срезали цены! Успешная покупка!";
+                        Sleep(1500);
+                        system("cls");
+                        break;
                     }
                     else
                     {
@@ -1646,6 +1812,13 @@ void Selling()
                     }
                 }
                 delete[] idArrCheck; delete[] nameArrCheck; delete[] countArrCheck; delete[] priceArrCheck; delete[] totalPriceArrCheck;
+                idArrCheck = nullptr;
+                nameArrCheck = nullptr;
+                countArrCheck = nullptr;
+                priceArrCheck = nullptr;
+                totalPriceArrCheck = nullptr;
+                checksize = 0;
+                break;
             }
 
             else if (choose == "2")
@@ -1742,4 +1915,50 @@ void StorageReturn()
         countArr[idArrCheck[i] - 1] += countArrCheck[i];
     }
     delete[] idArrCheck; delete[] nameArrCheck; delete[] countArrCheck; delete[] priceArrCheck; delete[] totalPriceArrCheck;
+
+    idArrCheck = nullptr;
+    nameArrCheck = nullptr;
+    countArrCheck = nullptr;
+    priceArrCheck = nullptr;
+    totalPriceArrCheck = nullptr;
+    checksize = 0;
+}
+void ShowIncome()
+{
+    system("cls");
+    std::cout << "[]====================Зараженный===================[]\n\n";
+    std::cout << "Текущая прибыль за смену\n\n";
+    std::cout << "Наличный расчёт:" << cashIncome << "\n";
+    std::cout << "Наличный расчёт:" << bankIncome << "\n";
+    std::cout << "Итого:" << bankIncome + cashIncome << "\n\n";
+    std::cout << "Cумма ваших продаж:" << bonusarr[curretid] << "\n\n";
+
+    system("pause");
+    system("cls");
+}
+bool Logout()
+{
+    std::string choose;
+    system("cls");
+    while (true)
+    {
+        std::cout << "Для подтверждения выхода из выхода введите пароль/exit\n";
+        Getline(choose);
+        if (choose == "exit")
+        {
+            system("cls");
+            return false;
+        }
+        else if (choose == passArr[curretid - 1] || choose == passArr[0])
+        {
+            system("cls");
+            return true;
+        }
+        else
+        {
+            Err();
+        }
+
+    }
+}
 }
