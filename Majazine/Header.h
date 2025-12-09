@@ -4,6 +4,15 @@ void SummonmenuNoLog();
 
 void СhangeStoroge();
 
+void ShowIncome();
+
+bool Logout();
+
+
+void ShowAdmMenu();
+
+void ShowUserMenu();
+
 void ChangeName();
 
 bool Checkpass(const std::string& str);
